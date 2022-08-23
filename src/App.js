@@ -1,44 +1,26 @@
-import logo from "./logo.svg";
-import SearchButton from "./SearchButton";
-import React from "react";
-import { findByLabelText } from "@testing-library/react";
+import React, { useContext } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import SearchContext from "./SearchContext";
+import Home from "./Home";
+import Recipe from "./Recipe";
 
 function App() {
-  const stileText = {
-    color: "white",
-  };
-  const containerForm = {
-    display: "flex",
-  };
-  const stileForm = {
-    border: "solid 1px green",
-    height: "60px",
-    backgroundColor: "black",
-    color: "white",
-    width: "230px",
-    borderRadius: "5px",
+  const [searchQuery, setSearchQuery] = React.useState("");
+
+  const updateQuery = (query) => {
+    console.log("SEARCH UPDATED");
+    setSearchQuery(query);
   };
 
   return (
-    <div>
-      <header>
-        <h1 style={stileText}>VEGETARIAN RECIPES</h1>
-        <p style={stileText}>
-          Look for the recipe you like the most and try it!
-        </p>
-      </header>
-      <form style={containerForm}>
-        <input
-          name="recipe"
-          id="recipe"
-          type="text"
-          placeholder="Write your recipe here"
-          style={stileForm}
-        ></input>
-
-        <SearchButton />
-      </form>
-    </div>
+    <SearchContext.Provider value={searchQuery}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home updateQuery={updateQuery} />}></Route>
+          <Route path="/:id" element={<Recipe />}></Route>
+        </Routes>
+      </BrowserRouter>
+    </SearchContext.Provider>
   );
 }
 
