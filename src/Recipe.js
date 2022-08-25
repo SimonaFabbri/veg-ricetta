@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import React from "react";
+import { useMediaQuery } from "react-responsive";
 
 const SPOON_API_KEY = "fe6d0f1cac9a42a487ff452bc15dbf56";
 
@@ -23,7 +24,7 @@ function Recipe() {
         // writeError(error);
       });
   }, []);
-
+  const isMobile = useMediaQuery({ maxWidth: 660 });
   return (
     <div>
       <button onClick={() => navigate(-1)}>Go back</button>
