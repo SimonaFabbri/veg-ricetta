@@ -13,7 +13,8 @@ function Home(props) {
   const searchQuery = useContext(SearchContext);
   const [queryInput, setQueryInput] = React.useState(searchQuery);
   const [recipes, setRecipes] = React.useState([]);
-  const [error, setError] = React.useState([]);
+  const [error, setError] = React.useState("");
+  const [searchSubmitted, setSearchSubmitted] = React.useState(false);
   // TODO: Aggiungere uno stato per controllare la ricerca
 
   React.useEffect(() => {
@@ -25,12 +26,11 @@ function Home(props) {
   function getData(e) {
     if (e) e.preventDefault();
 
-    // TODO: Aggiornare stato che controlla se l'utente ha già cercato
+    setSearchSubmitted(true);
 
     if (searchQuery !== queryInput) {
       props.updateQuery(queryInput);
     }
-
     axios
       .get(
         `https://api.spoonacular.com/recipes/complexSearch?query=${queryInput}&diet=vegetarian&apiKey=${SPOON_API_KEY}`
@@ -71,29 +71,26 @@ function Home(props) {
 
       <div>
         <ul style={{ paddingInlineStart: "0px" }}>
-          {recipes.length > 0 ? (
-            recipes.map((recipe, i) => {
-              return (
-                <Link
-                  style={isMobile ? prova : styleRecipes}
-                  key={i}
-                  to={`/${recipe.id}`}
-                >
-                  <img src={recipe.image} />
-                  <h1 style={styleText}>{recipe.title}</h1>
-                </Link>
-              );
-            })
-          ) : (
-            // TODO: Rimuovere questo paragrafo ( torna null )
-            <p style={styleText}>
-              No recipes found with the search query: {searchQuery}
-            </p>
-          )}
+          {recipes.length > 0
+            ? recipes.map((recipe, i) => {
+                return (
+                  <Link
+                    style={isMobile ? prova : styleRecipes}
+                    key={i}
+                    to={`/${recipe.id}`}
+                  >
+                    <img src={recipe.image} />
+                    <h1 style={styleText}>{recipe.title}</h1>
+                  </Link>
+                );
+              })
+            : null}
         </ul>
-
-        {/* TODO : Fare un altro condizionale per stampare "no recipes" 
-        se l'array è vuoto e l'utente ha giàa fatto click su cerca */}
+        {searchSubmitted && recipes.length === 0 ? (
+          <p style={styleText}>
+            No recipes found with the search query: {searchQuery}
+          </p>
+        ) : null}
       </div>
       <div>
         <p>{error ? error.message : null}</p>
