@@ -40,6 +40,7 @@ function Home(props) {
         setRecipes(res.data.results);
       })
       .catch((error) => {
+        console.error(error);
         setError(error);
       });
   }
@@ -86,14 +87,14 @@ function Home(props) {
               })
             : null}
         </ul>
-        {searchSubmitted && recipes.length === 0 ? (
+        {searchSubmitted && recipes.length === 0 && !error ? (
           <p style={styleText}>
             No recipes found with the search query: {searchQuery}
           </p>
         ) : null}
       </div>
       <div>
-        <p>{error ? error.message : null}</p>
+        <p style={{ color: "red" }}>{error ? error.message : null}</p>
       </div>
     </div>
   );
