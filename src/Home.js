@@ -1,22 +1,23 @@
 import React, { useContext } from "react";
-import logo from "./logo.svg";
 import SearchButton from "./SearchButton";
-import { findByLabelText } from "@testing-library/react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchContext from "./SearchContext";
+import { useMediaQuery } from "react-responsive";
+
 const SPOON_API_KEY = "fe6d0f1cac9a42a487ff452bc15dbf56";
 
+//////////////////////// DISPLAY RESPONSIVE ////////////////////////
+
 function Home(props) {
-  const [queryInput, setQueryInput] = React.useState("");
+  const searchQuery = useContext(SearchContext);
+  const [queryInput, setQueryInput] = React.useState(searchQuery);
   const [recipes, setRecipes] = React.useState([]);
   const [error, setError] = React.useState([]);
-
-  const searchQuery = useContext(SearchContext);
+  // TODO: Aggiungere uno stato per controllare la ricerca
 
   React.useEffect(() => {
     if (searchQuery !== "") {
-      setQueryInput(searchQuery);
       getData();
     }
   }, [searchQuery]);
@@ -24,7 +25,11 @@ function Home(props) {
   function getData(e) {
     if (e) e.preventDefault();
 
-    props.updateQuery(queryInput);
+    // TODO: Aggiornare stato che controlla se l'utente ha già cercato
+
+    if (searchQuery !== queryInput) {
+      props.updateQuery(queryInput);
+    }
 
     axios
       .get(
@@ -38,12 +43,13 @@ function Home(props) {
         setError(error);
       });
   }
+  const isMobile = useMediaQuery({ maxWidth: 660 });
 
   return (
-    <div>
+    <div style={styleBox}>
       <header>
-        <h1 style={stileText}>VEGETARIAN RECIPES</h1>
-        <p style={stileText}>
+        <h1 style={styleText}>VEGETARIAN RECIPES</h1>
+        <p style={styleText}>
           Look for the recipe you like the most and try it!
         </p>
       </header>
@@ -53,7 +59,7 @@ function Home(props) {
           id="recipe"
           type="text"
           placeholder="Write your recipe here"
-          style={stileForm}
+          style={styleForm}
           value={queryInput}
           onChange={(e) => {
             setQueryInput(e.target.value);
@@ -62,17 +68,32 @@ function Home(props) {
 
         <SearchButton></SearchButton>
       </form>
+
       <div>
-        <ul>
-          {recipes.map((i) => {
-            return (
-              <Link style={stileRecipes} key={i} to={`/${i.id}`}>
-                <img src={i.image} />
-                <h1 style={stileText}>{i.title}</h1>
-              </Link>
-            );
-          })}
+        <ul style={{ paddingInlineStart: "0px" }}>
+          {recipes.length > 0 ? (
+            recipes.map((recipe, i) => {
+              return (
+                <Link
+                  style={isMobile ? prova : styleRecipes}
+                  key={i}
+                  to={`/${recipe.id}`}
+                >
+                  <img src={recipe.image} />
+                  <h1 style={styleText}>{recipe.title}</h1>
+                </Link>
+              );
+            })
+          ) : (
+            // TODO: Rimuovere questo paragrafo ( torna null )
+            <p style={styleText}>
+              No recipes found with the search query: {searchQuery}
+            </p>
+          )}
         </ul>
+
+        {/* TODO : Fare un altro condizionale per stampare "no recipes" 
+        se l'array è vuoto e l'utente ha giàa fatto click su cerca */}
       </div>
       <div>
         <p>{error ? error.message : null}</p>
@@ -84,26 +105,35 @@ function Home(props) {
 export default Home;
 
 //////////////////////// STYLES ////////////////////////
-const stileText = {
+const styleBox = { paddingLeft: "100px" };
+
+const styleText = {
   color: "white",
 };
 const containerForm = {
   display: "flex",
 };
-const stileForm = {
-  border: "solid 1px green",
+
+const styleForm = {
   height: "60px",
   backgroundColor: "black",
   color: "white",
   width: "230px",
   borderRadius: "5px",
 };
-const stileRecipes = {
-  border: "solid 1px green",
+
+const styleRecipes = {
   paddingBottom: "50px",
   display: "flex",
   paddingTop: "50px",
   alignItems: "center",
-  paddingLeft: "50px",
   paddingRight: "50px",
+  marginRight: "100px",
+};
+
+const prova = {
+  ...styleRecipes,
+  display: "block",
+  paddingRight: "0px",
+  textAlign: "center",
 };
