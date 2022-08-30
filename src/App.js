@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SearchContext from "./SearchContext";
-import Home from "./Home";
-import Recipe from "./Recipe";
+import Home from "./pages/Home/Home";
+import Recipe from "./pages/Recipe/Recipe";
 
 function App() {
   const [searchQuery, setSearchQuery] = React.useState("");
