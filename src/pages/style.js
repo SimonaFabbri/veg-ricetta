@@ -1,5 +1,5 @@
 export const styleBox = { paddingLeft: "100px" };
-export const styleBoxMobile = { paddingLeft: "5x" };
+export const styleBoxMobile = { paddingLeft: "0px", alignItems: "center" };
 
 export const styleText = {
   color: "white",
