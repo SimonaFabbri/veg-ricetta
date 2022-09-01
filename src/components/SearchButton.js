@@ -1,8 +1,23 @@
 import React from "react";
-import { styleButton } from "./styleButton";
+import {
+  styleButton,
+  MouseOverButton,
+  MouseOutButton,
+  onClickButton,
+} from "./styleButton";
 
 function SearchButton() {
-  return <button style={styleButton}>Search</button>;
+  return (
+    <button
+      onMouseOver={MouseOverButton}
+      onMouseOut={MouseOutButton}
+      onClick={onClickButton}
+      onCli
+      style={styleButton}
+    >
+      Search
+    </button>
+  );
 }
 
 export default SearchButton;

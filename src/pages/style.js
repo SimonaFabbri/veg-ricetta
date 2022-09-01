@@ -1,5 +1,5 @@
 export const styleBox = { paddingLeft: "100px" };
-export const styleBoxMobile = { paddingLeft: "0px", alignItems: "center" };
+export const styleBoxMobile = { paddingLeft: "40px" };
 
 export const styleText = {
   color: "white",
@@ -23,6 +23,7 @@ export const styleRecipes = {
   alignItems: "center",
   paddingRight: "50px",
   marginRight: "100px",
+  textDecoration: "none",
 };
 
 export const styleRecipesMobile = {
@@ -33,3 +34,10 @@ export const styleRecipesMobile = {
 };
 
 export const errorStyle = { color: "red" };
+
+export function MouseOver(event) {
+  event.target.style.opacity = "0.5";
+}
+export function MouseOut(event) {
+  event.target.style.opacity = "1";
+}

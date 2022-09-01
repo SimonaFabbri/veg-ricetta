@@ -13,6 +13,8 @@ import {
   styleBox,
   errorStyle,
   styleBoxMobile,
+  MouseOver,
+  MouseOut,
 } from "../style";
 
 function Home(props) {
@@ -87,6 +89,8 @@ function Home(props) {
                     <Link
                       style={isMobile ? styleRecipesMobile : styleRecipes}
                       key={i}
+                      onMouseOver={MouseOver}
+                      onMouseOut={MouseOut}
                       to={`/${recipe.id}`}
                     >
                       <img src={recipe.image} />
