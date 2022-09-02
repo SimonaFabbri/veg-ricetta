@@ -12,7 +12,6 @@ function SearchButton() {
       onMouseOver={MouseOverButton}
       onMouseOut={MouseOutButton}
       onClick={onClickButton}
-      onCli
       style={styleButton}
     >
       Search

@@ -9,10 +9,9 @@ export const searchRecipes = async (query) => {
   };
 
   try {
-    const recipes = await axios
-      .get
-      // `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian&apiKey=${SPOON_API_KEY}`
-      ();
+    const recipes = await axios.get(
+      `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian&apiKey=${SPOON_API_KEY}`
+    );
     result.recipes = recipes.data.results;
   } catch (error) {
     result.error = error;
@@ -21,16 +20,15 @@ export const searchRecipes = async (query) => {
   return result;
 };
 
-export const getRecipe = (recipeId) => {
+export const getRecipe = async (recipeId) => {
   let res = {
     recipe: [],
     error: "",
   };
   try {
-    const recipe = axios
-      .get
-      // `https://api.spoonacular.com/recipes/${recipeId}/information/?apiKey=${SPOON_API_KEY}`
-      ();
+    const recipe = await axios.get(
+      `https://api.spoonacular.com/recipes/${recipeId}/information/?apiKey=${SPOON_API_KEY}`
+    );
     res.recipe = recipe.data;
   } catch (error) {
     res.error = error;

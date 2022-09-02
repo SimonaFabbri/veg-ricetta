@@ -1,12 +1,14 @@
-export const styleBox = { paddingLeft: "100px" };
+export const styleBox = { padding: "50px 50px 50px 50px" };
 export const styleBoxMobile = {
   textAlign: "center",
-  padding: "0px 20px 0px 20px",
+  padding: "20px 20px 20px 20px",
+  width: "100%",
 };
 
 export const styleText = {
   color: "white",
 };
+
 export const containerForm = {
   display: "flex",
 };
@@ -24,8 +26,6 @@ export const styleRecipes = {
   display: "flex",
   paddingTop: "50px",
   alignItems: "center",
-  paddingRight: "50px",
-  marginRight: "100px",
   textDecoration: "none",
 };
 
@@ -34,6 +34,11 @@ export const styleRecipesMobile = {
   display: "block",
   paddingRight: "0px",
   textAlign: "center",
+};
+
+export const imageStyle = {
+  display: "block",
+  maxWidth: "100%",
 };
 
 export const errorStyle = { color: "red" };

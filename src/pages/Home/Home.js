@@ -81,7 +81,7 @@ function Home(props) {
       {isLoading ? (
         <p style={styleText}>Loading...</p>
       ) : (
-        <div>
+        <div style={isMobile ? styleBoxMobile : styleBox}>
           <ul style={{ paddingInlineStart: "0px" }}>
             {recipes.length > 0
               ? recipes.map((recipe, i) => {
@@ -89,12 +89,16 @@ function Home(props) {
                     <Link
                       style={isMobile ? styleRecipesMobile : styleRecipes}
                       key={i}
-                      onMouseOver={MouseOver}
-                      onMouseOut={MouseOut}
                       to={`/${recipe.id}`}
                     >
                       <img src={recipe.image} />
-                      <h1 style={styleText}>{recipe.title}</h1>
+                      <h1
+                        onMouseOver={MouseOver}
+                        onMouseOut={MouseOut}
+                        style={styleText}
+                      >
+                        {recipe.title}
+                      </h1>
                     </Link>
                   );
                 })
